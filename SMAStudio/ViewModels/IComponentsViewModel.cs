@@ -20,11 +20,17 @@ namespace SMAStudio.ViewModels
         void AddVariable(VariableViewModel variable);
 
         void RemoveVariable(VariableViewModel variable);
+        
+        void AddSchedule(ScheduleViewModel schedule);
+
+        void RemoveSchedule(ScheduleViewModel schedule);
 
         ObservableCollection<RunbookViewModel> Runbooks { get; set; }
 
         ObservableCollection<VariableViewModel> Variables { get; set; }
 
         ObservableCollection<CredentialViewModel> Credentials { get; set; }
+
+        ObservableCollection<ScheduleViewModel> Schedules { get; set; }
     }
 }

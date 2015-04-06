@@ -58,7 +58,7 @@ namespace SMAStudio.Util
             {
                 var runbook = _api.Runbooks.FirstOrDefault();
             }
-            catch (DataServiceQueryException e)
+            catch (Exception e)
             {
                 Core.Log.Error("Unable to connect to SMA. Verify the URL and/or credentials.", e);
                 return false;

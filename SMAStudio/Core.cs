@@ -66,6 +66,7 @@ namespace SMAStudio
             _container.RegisterInstance<IRunbookService>(new RunbookService());
             _container.RegisterInstance<IVariableService>(new VariableService());
             _container.RegisterInstance<ICredentialService>(new CredentialService());
+            _container.RegisterInstance<IScheduleService>(new ScheduleService());
             _container.RegisterInstance<IAutoSaveService>(new AutoSaveService(_container.Resolve<IWorkspaceViewModel>(), _container.Resolve<IApiService>()));
 
             // Commands

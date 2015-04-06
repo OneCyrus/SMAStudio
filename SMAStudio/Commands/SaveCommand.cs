@@ -20,6 +20,7 @@ namespace SMAStudio.Commands
         private IRunbookService _runbookService;
         private IVariableService _variableService;
         private ICredentialService _credentialService;
+        private IScheduleService _scheduleService;
 
         public SaveCommand()
         {
@@ -27,6 +28,7 @@ namespace SMAStudio.Commands
             _runbookService = Core.Resolve<IRunbookService>();
             _variableService = Core.Resolve<IVariableService>();
             _credentialService = Core.Resolve<ICredentialService>();
+            _scheduleService = Core.Resolve<IScheduleService>();
         }
 
         public bool CanExecute(object parameter)
@@ -59,6 +61,8 @@ namespace SMAStudio.Commands
                 SaveVariable((VariableViewModel)parameter);
             else if (parameter is CredentialViewModel)
                 SaveCredential((CredentialViewModel)parameter);
+            else if (parameter is ScheduleViewModel)
+                SaveSchedule((ScheduleViewModel)parameter);
         }
 
         private void SaveRunbook(RunbookViewModel rb)
@@ -74,6 +78,11 @@ namespace SMAStudio.Commands
         private void SaveCredential(CredentialViewModel credential)
         {
             _credentialService.Update(credential);
+        }
+
+        private void SaveSchedule(ScheduleViewModel schedule)
+        {
+            _scheduleService.Update(schedule);
         }
     }
 }

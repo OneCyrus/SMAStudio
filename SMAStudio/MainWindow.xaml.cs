@@ -163,6 +163,8 @@ namespace SMAStudio
                             message = String.Format(message, "variable", ((VariableViewModel)document).Name);
                         else if (document is CredentialViewModel)
                             message = String.Format(message, "credential", ((CredentialViewModel)document).Name);
+                        else if (document is CredentialViewModel)
+                            message = String.Format(message, "schedule", ((ScheduleViewModel)document).Name);
 
                         var result = MessageBox.Show(message, "Save", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
@@ -276,5 +278,17 @@ namespace SMAStudio
         {
 
         }
+
+        private void textEditor_textChanged(object sender, SelectionChangedEventArgs e)
+        {
+            IDocumentViewModel documentViewModel = (IDocumentViewModel)tabDocuments.SelectedItem;
+
+            if (documentViewModel == null)
+                return;
+
+            documentViewModel.TextChanged(sender, e);
+
+            documentViewModel.LastTimeKeyDown = DateTime.Now;
+        }      
     }
 }

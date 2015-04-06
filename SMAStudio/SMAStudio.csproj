@@ -102,6 +102,24 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.DataGrid">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.2.3\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -121,6 +139,8 @@
     <Compile Include="Models\DocumentTemplate.cs" />
     <Compile Include="Models\IProjectContent.cs" />
     <Compile Include="Models\PowershellProjectContent.cs" />
+    <Compile Include="Services\SMA\IScheduleService.cs" />
+    <Compile Include="Services\SMA\ScheduleService.cs" />
     <Compile Include="UI\Dialogs\AddNewItemDialog.xaml.cs">
       <DependentUpon>AddNewItemDialog.xaml</DependentUpon>
     </Compile>
@@ -239,9 +259,10 @@
     <Compile Include="ViewModels\IWorkspaceViewModel.cs" />
     <Compile Include="ViewModels\RunbookVersionViewModel.cs" />
     <Compile Include="ViewModels\RunbookViewModel.cs" />
+    <Compile Include="ViewModels\VariableViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
     <Compile Include="ViewModels\ToolbarViewModel.cs" />
-    <Compile Include="ViewModels\VariableViewModel.cs" />
+    <Compile Include="ViewModels\ScheduleViewModel.cs" />
     <Compile Include="ViewModels\WorkspaceViewModel.cs" />
     <Compile Include="UI\Dialogs\WelcomeDialog.xaml.cs">
       <DependentUpon>WelcomeDialog.xaml</DependentUpon>
@@ -318,6 +339,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\SMAStudio.SMAWebService.OrchestratorApi.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -327,6 +349,7 @@
     <EmbeddedResource Include="Xshd\SMA.xshd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <None Include="SMAStudio_DGU.pfx.snk" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
