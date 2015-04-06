@@ -289,6 +289,6 @@ namespace SMAStudio
             documentViewModel.TextChanged(sender, e);
 
             documentViewModel.LastTimeKeyDown = DateTime.Now;
-        }      
+        }
     }
 }

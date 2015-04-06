@@ -141,7 +141,7 @@
                         <TextBlock Margin="5,0,0,0">Test</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnStart" Command="{Binding RunCommand}" CommandParameter="{Binding ElementName=tabDocuments, Path=SelectedItem}">
+                <Button x:Name="btnStart" Command="{Binding RunCommand}" CommandParameter="{Binding ElementName=tabDocuments, Path=SelectedItem}" Click="btnStart_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Icons/_Run.png" Width="16" />
                         <TextBlock Margin="5,0,0,0">Run</TextBlock>
