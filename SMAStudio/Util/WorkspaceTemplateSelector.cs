@@ -14,6 +14,8 @@ namespace SMAStudio.Util
         public DataTemplate RunbookTemplate { get; set; }
         public DataTemplate VariableTemplate { get; set; }
         public DataTemplate CredentialTemplate { get; set; }
+        public DataTemplate ScheduleTemplateDaily { get; set; }
+        public DataTemplate ScheduleTemplateOneTime { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -25,6 +27,18 @@ namespace SMAStudio.Util
 
             if (item is CredentialViewModel)
                 return CredentialTemplate;
+
+            if (item is ScheduleViewModel)
+            {
+                if (((ScheduleViewModel)item).ScheduleType == ScheduleType.OneTimeSchedule)
+                {
+                    return ScheduleTemplateOneTime;
+                }
+                else
+                {
+                    return ScheduleTemplateDaily;
+                }
+            }
 
             return base.SelectTemplate(item, container);
         }

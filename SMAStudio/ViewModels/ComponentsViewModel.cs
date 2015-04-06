@@ -26,6 +26,7 @@ namespace SMAStudio.ViewModels
         private IRunbookService _runbookService;
         private IVariableService _variableService;
         private ICredentialService _credentialService;
+        private IScheduleService _scheduleService;
 
         private object _sync = new object();
         
@@ -36,6 +37,7 @@ namespace SMAStudio.ViewModels
             Runbooks = new ObservableCollection<RunbookViewModel>();
             Variables = new ObservableCollection<VariableViewModel>();
             Credentials = new ObservableCollection<CredentialViewModel>();
+            Schedules = new ObservableCollection<ScheduleViewModel>();
         }
 
         public void Initialize()
@@ -43,6 +45,7 @@ namespace SMAStudio.ViewModels
             _runbookService = Core.Resolve<IRunbookService>();
             _variableService = Core.Resolve<IVariableService>();
             _credentialService = Core.Resolve<ICredentialService>();
+            _scheduleService = Core.Resolve<IScheduleService>();
 
             Load();
         }
@@ -110,6 +113,17 @@ namespace SMAStudio.ViewModels
                     base.RaisePropertyChanged("Credentials");
                 });
             }
+
+            if (((BaseService)_runbookService).SuccessfulInitialization || ((BaseService)_scheduleService).SuccessfulInitialization)
+            {
+                AsyncService.Execute(ThreadPriority.Normal, delegate()
+                {
+                    Core.Log.DebugFormat("Loading schedules...");
+
+                    Schedules = _scheduleService.GetScheduleViewModels(forceDownload);
+                    base.RaisePropertyChanged("Schedules");
+                });
+            }
         }
 
         /// <summary>
@@ -135,6 +149,32 @@ namespace SMAStudio.ViewModels
             {
                 Runbooks.Remove(runbook);
                 base.RaisePropertyChanged("Runbooks");
+            }
+        }
+
+        /// <summary>
+        /// Add a schedule to the list if it doesn't already exist
+        /// </summary>
+        /// <param name="schedule"></param>
+        public void AddSchedule(ScheduleViewModel schedule)
+        {
+            if (!Schedules.Contains(schedule))
+            {
+                Schedules.Add(schedule);
+                base.RaisePropertyChanged("Schedules");
+            }
+        }
+
+        /// <summary>
+        /// Remove a schedule from the list if it exist
+        /// </summary>
+        /// <param name="schedule"></param>
+        public void RemoveSchedule(ScheduleViewModel schedule)
+        {
+            if (Schedules.Contains(schedule))
+            {
+                Schedules.Remove(schedule);
+                base.RaisePropertyChanged("Schedules");
             }
         }
 
@@ -170,6 +210,8 @@ namespace SMAStudio.ViewModels
         public ObservableCollection<VariableViewModel> Variables { get; set; }
 
         public ObservableCollection<CredentialViewModel> Credentials { get; set; }
+
+        public ObservableCollection<ScheduleViewModel> Schedules { get; set; }
 
         public ObservableCollection<TagViewModel> Tags { get; set; }
 
