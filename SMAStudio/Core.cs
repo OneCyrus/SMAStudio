@@ -83,6 +83,7 @@ namespace SMAStudio
             _container.RegisterType<ICommand, NewCredentialCommand>("NewCredential");
             _container.RegisterType<ICommand, NewRunbookCommand>("NewRunbook");
             _container.RegisterType<ICommand, NewVariableCommand>("NewVariable");
+            _container.RegisterType<ICommand, NewScheduleCommand>("NewSchedule");
             _container.RegisterType<ICommand, RefreshCommand>("Refresh");
             _container.RegisterType<ICommand, RevertCommand>("Revert");
             _container.RegisterType<ICommand, RunCommand>("Run");

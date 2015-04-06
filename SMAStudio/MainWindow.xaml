@@ -96,6 +96,7 @@
                     <MenuItem Header="Credential" Command="{Binding NewCredentialCommand}" />
                     <MenuItem Header="Runbook" Command="{Binding NewRunbookCommand}" />
                     <MenuItem Header="Variable" Command="{Binding NewVariableCommand}" />
+                    <MenuItem Header="Schedule" Command="{Binding NewScheduleCommand}" />
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="Close" Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=tabDocuments, Path=SelectedItem}" />
@@ -141,7 +142,7 @@
                         <TextBlock Margin="5,0,0,0">Test</TextBlock>
                     </StackPanel>
                 </Button>
-                <Button x:Name="btnStart" Command="{Binding RunCommand}" CommandParameter="{Binding ElementName=tabDocuments, Path=SelectedItem}" Click="btnStart_Click">
+                <Button x:Name="btnStart" Command="{Binding RunCommand}" CommandParameter="{Binding ElementName=tabDocuments, Path=SelectedItem}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="Icons/_Run.png" Width="16" />
                         <TextBlock Margin="5,0,0,0">Run</TextBlock>
@@ -221,6 +222,7 @@
                         <MenuItem Header="New Credential" Command="{Binding NewCredentialCommand}" />
                         <MenuItem Header="New Runbook" Command="{Binding NewRunbookCommand}" />
                         <MenuItem Header="New Variable" Command="{Binding NewVariableCommand}" />
+                        <MenuItem Header="New Schedule" Command="{Binding NewScheduleCommand}" />
                     </ContextMenu>
                 </TreeView.ContextMenu>
                 <TreeView.Resources>
@@ -480,7 +482,15 @@
                                             <xctk:DateTimePicker DockPanel.Dock="Top" Margin="5,0,5,0" Value="{Binding Path=IsExpirationEnabled}" ></xctk:DateTimePicker>
 
                                             <Label Content="Runbooks" DockPanel.Dock="Top" Margin="0,5,0,0" />
-                                            <ListBox DockPanel.Dock="Top" Margin="5,0,5,0" ItemsSource="{Binding Path=Runbooks}">                                                
+                                            <ListBox DockPanel.Dock="Top" Margin="5,0,5,0" ItemsSource="{Binding Path=Runbooks}">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel>
+                                                            <TextBlock>Test</TextBlock>
+                                                            <TextBlock Text="{Binding _RunbookName}"></TextBlock>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ListBox.ItemTemplate>
                                             </ListBox>
 
                                             <Label Content="Is Enabled" DockPanel.Dock="Top" Margin="0,5,0,0" />

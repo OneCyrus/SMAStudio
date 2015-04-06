@@ -87,6 +87,7 @@ namespace SMAStudio.Services
                 newSchedule.Schedule.Description = string.Empty;
 
                 newSchedule.Schedule.ScheduleID = Guid.Empty;
+                newSchedule.StartTime = DateTime.Now;
 
                 _workspaceViewModel.OpenDocument(newSchedule);
 
@@ -105,15 +106,17 @@ namespace SMAStudio.Services
 
         public bool Update(ScheduleViewModel schedule)
         {
-            Schedule vari = null;
+            Schedule sched = null;
 
             try
             {
+                var _runbookService = Core.Resolve<RunbookService>();
+
                 if (schedule.Schedule.ScheduleID != Guid.Empty)
                 {
-                    vari = _api.Current.Schedules.Where(v => v.ScheduleID.Equals(schedule.Schedule.ScheduleID)).FirstOrDefault();
+                    sched = _api.Current.Schedules.Where(v => v.ScheduleID.Equals(schedule.Schedule.ScheduleID)).FirstOrDefault();
 
-                    if (vari == null)
+                    if (sched == null)
                         return false;
 
                     //if (vari.IsEncrypted != schedule.IsEncrypted)
@@ -122,17 +125,17 @@ namespace SMAStudio.Services
                     //    return false;
                     //}
 
-                    vari.Name = schedule.Schedule.Name;
-                    vari.Description = schedule.Schedule.Description;
-                    vari.StartTime = schedule.Schedule.StartTime;
-                    vari.IsEnabled = schedule.Schedule.IsEnabled;
+                    sched.Name = schedule.Schedule.Name;
+                    sched.Description = schedule.Schedule.Description;
+                    sched.StartTime = schedule.Schedule.StartTime.ToUniversalTime();
+                    sched.IsEnabled = schedule.Schedule.IsEnabled;
                     if (schedule.IsExpirationEnabled)
                     {
-                        vari.ExpiryTime = schedule.Schedule.ExpiryTime;
+                        sched.ExpiryTime = schedule.Schedule.ExpiryTime;
                     }
                     else
                     {
-                        vari.ExpiryTime = null;
+                        sched.ExpiryTime = null;
                     }
 
                     _api.Current.UpdateObject(schedule.Schedule);
@@ -140,20 +143,23 @@ namespace SMAStudio.Services
                 }
                 else
                 {
-                    vari = new OneTimeSchedule();
+                    sched = new OneTimeSchedule();
 
-                    vari.Name = schedule.Name;
-                    vari.Description = schedule.Content;
-                    vari.Name = schedule.Schedule.Name;
-                    vari.Description = schedule.Schedule.Description;
-                    vari.StartTime = schedule.Schedule.StartTime;
-                    vari.IsEnabled = schedule.Schedule.IsEnabled;
-                    vari.ExpiryTime = schedule.Schedule.ExpiryTime;
-
-                    _api.Current.AddToSchedules(vari);
+                    sched.Name = schedule.Name;
+                    sched.Description = schedule.Content;
+                    sched.Name = schedule.Schedule.Name;
+                    sched.Description = schedule.Schedule.Description;
+                    sched.StartTime = schedule.Schedule.StartTime.ToUniversalTime();
+                    sched.IsEnabled = schedule.Schedule.IsEnabled;
+                    sched.ExpiryTime = schedule.Schedule.ExpiryTime;
+                                        
+                    _api.Current.AddToSchedules(sched);
                     _api.Current.SaveChanges();
 
-                    schedule.Schedule = vari;
+                    //var runbook = _runbookService.GetRunbook("DiscoverAllLocalModules");
+                    //runbook.StartOnSchedule(_api.Current, sched);
+
+                    schedule.Schedule = sched;
                 }
 
                 schedule.UnsavedChanges = false;
@@ -165,8 +171,8 @@ namespace SMAStudio.Services
             }
             catch (Exception ex)
             {
-                Core.Log.Error("Unable to save the variable.", ex);
-                MessageBox.Show("An error occurred when saving the variable. Please refer to the logs for more information.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Core.Log.Error("Unable to save the schedule.", ex);
+                MessageBox.Show("An error occurred when saving the schedule. Please refer to the logs for more information.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             return false;

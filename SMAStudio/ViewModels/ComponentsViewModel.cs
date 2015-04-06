@@ -240,6 +240,11 @@ namespace SMAStudio.ViewModels
             get { return Core.Resolve<ICommand>("NewVariable"); }
         }
 
+        public ICommand NewScheduleCommand
+        {
+            get { return Core.Resolve<ICommand>("NewSchedule"); }
+        }
+
         public ICommand NewCredentialCommand
         {
             get { return Core.Resolve<ICommand>("NewCredential"); }
