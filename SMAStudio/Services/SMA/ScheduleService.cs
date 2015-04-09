@@ -152,9 +152,16 @@ namespace SMAStudio.Services
                     sched.StartTime = schedule.Schedule.StartTime.ToUniversalTime();
                     sched.IsEnabled = schedule.Schedule.IsEnabled;
                     sched.ExpiryTime = schedule.Schedule.ExpiryTime;
-                                        
-                    _api.Current.AddToSchedules(sched);
+                                                                                                                     
+                    _api.Current.AddToSchedules(sched);                                                          
                     _api.Current.SaveChanges();
+
+                    var jobsched = _api.Current.Schedules.Where(x => x.Name == schedule.Name).First();
+
+                    var runbook = _runbookService.GetRunbook("DiscoverAllLocalModules");
+                    runbook.StartOnSchedule(_api.Current, jobsched);
+                    
+
 
                     //var runbook = _runbookService.GetRunbook("DiscoverAllLocalModules");
                     //runbook.StartOnSchedule(_api.Current, sched);
